@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense, useRef, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Sky } from "@react-three/drei";
+import TheSunny from "./components/TheSunny";
+import Terrain from "./components/Terrain";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Canvas style={{ height: "100vh" }} fov={70}>
+      <fog attach="fog" args={["white", 0, 26]} />
+      <OrbitControls enableZoom enablePan enableRotate />
+      <ambientLight intensity={1} position={[0, 50, 50]} />
+      <pointLight intensity={2} position={[7, 5, 1]} />
+      <Sky sunPosition={[7, 5, 1]} />
+      <TheSunny />
+      <Suspense>
+        <Terrain />
+      </Suspense>
+    </Canvas>
   );
 }
-
-export default App;
